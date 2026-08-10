@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <!-- Sandstone emblem mark -->
+  <g transform="translate(5, 5)">
+    <rect width="50" height="50" rx="12" fill="url(#grad-sand)" />
+    <!-- Sandstone layers & Mekong river curves -->
+    <path d="M 8 36 C 18 22, 28 32, 42 20 L 42 42 L 8 42 Z" fill="#A86538" />
+    <path d="M 8 42 C 20 30, 32 38, 42 28 L 42 44 L 8 44 Z" fill="#C2593F" />
+    <path d="M 8 44 C 18 38, 30 44, 42 38 L 42 45 L 8 45 Z" fill="#3B6F8C" opacity="0.9" />
+    <circle cx="36" cy="15" r="5" fill="#F4E8D4" />
+  </g>
+  <defs>
+    <linearGradient id="grad-sand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D4A63"/>
+      <stop offset="100%" stop-color="#1C3144"/>
+    </linearGradient>
+  </defs>
+  <!-- White Text for Dark Header -->
+  <text x="65" y="28" font-family="'IBM Plex Sans Thai', sans-serif" font-weight="700" font-size="15" fill="#FFFFFF" letter-spacing="0.5">UBON GEOPARK</text>
+  <text x="65" y="44" font-family="'IBM Plex Sans Thai', sans-serif" font-weight="500" font-size="11" fill="#E8D5C0">อุทยานธรณีอุบลราชธานี</text>
+</svg>

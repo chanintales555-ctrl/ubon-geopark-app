@@ -1,0 +1,18 @@
+{
+  "name": "UBONRATCHATANI GEOPARK - อุทยานธรณีอุบลราชธานี",
+  "short_name": "UbonGeopark",
+  "description": "แอปพลิเคชันสำรวจมรดกธรณีวิทยา 46 แห่ง 4 อำเภอ โดย องค์การบริหารส่วนจังหวัดอุบลราชธานี",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F9F6F0",
+  "theme_color": "#1C3144",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/assets/logo/geopark-logo-light.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

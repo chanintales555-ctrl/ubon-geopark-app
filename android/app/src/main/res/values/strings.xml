@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Ubon Geopark</string>
+    <string name="title_activity_main">Ubon Geopark</string>
+    <string name="package_name">org.ubongeopark.app</string>
+    <string name="custom_url_scheme">org.ubongeopark.app</string>
+</resources>
