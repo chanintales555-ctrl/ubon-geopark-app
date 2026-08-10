@@ -1,13 +1,14 @@
 import React from 'react';
 import { Language } from '../../types';
-import { Compass, MapPin } from 'lucide-react';
+import { Compass, MapPin, Download } from 'lucide-react';
 
 interface HeroSectionProps {
   lang: Language;
   onExploreClick: () => void;
+  promptInstall?: () => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onExploreClick }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onExploreClick, promptInstall }) => {
   return (
     <div
       style={{
@@ -94,14 +95,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onExploreClick }
             : 'Explore Sam Phan Bok, Pha Taem & 46 registered geosites aspiring for UNESCO status.'}
         </p>
 
-        <button
-          onClick={onExploreClick}
-          className="btn btn-primary"
-          style={{ width: '100%', justifyContent: 'center', padding: '0.65rem 1rem', whiteSpace: 'normal', textAlign: 'center' }}
-        >
-          <Compass size={18} style={{ flexShrink: 0 }} />
-          <span>{lang === 'th' ? 'เริ่มสำรวจแผนที่ธรณีวิทยา 46 แห่ง' : 'Explore Interactive 46 Geosite Map'}</span>
-        </button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <button
+            onClick={onExploreClick}
+            className="btn btn-primary"
+            style={{ width: '100%', justifyContent: 'center', padding: '0.65rem 1rem', whiteSpace: 'normal', textAlign: 'center' }}
+          >
+            <Compass size={18} style={{ flexShrink: 0 }} />
+            <span>{lang === 'th' ? 'เริ่มสำรวจแผนที่ธรณีวิทยา 46 แห่ง' : 'Explore Interactive 46 Geosite Map'}</span>
+          </button>
+
+          {promptInstall && (
+            <button
+              onClick={promptInstall}
+              className="btn"
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+                padding: '0.6rem 1rem',
+                backgroundColor: '#059669',
+                color: '#ffffff',
+                border: 'none',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+                boxShadow: '0 4px 12px rgba(5, 150, 105, 0.45)',
+                cursor: 'pointer'
+              }}
+            >
+              <Download size={18} style={{ flexShrink: 0 }} />
+              <span>{lang === 'th' ? '📲 ติดตั้งแอปพลิเคชันลงมือถือ (ปุ่มเดียว)' : '📲 1-Click Install Mobile App'}</span>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

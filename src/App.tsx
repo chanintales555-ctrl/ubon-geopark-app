@@ -4,6 +4,7 @@ import { GEOSITES } from './data/geosites';
 import { useLanguage } from './hooks/useLanguage';
 import { useGeolocation } from './hooks/useGeolocation';
 import { usePassport } from './hooks/usePassport';
+import { usePWAInstall } from './hooks/usePWAInstall';
 import { Header } from './components/layout/Header';
 import { TabBar, TabType } from './components/layout/TabBar';
 import { HeroSection } from './components/home/HeroSection';
@@ -24,6 +25,7 @@ export function App() {
   const { lang, toggleLang } = useLanguage();
   const { lat: userLat, lng: userLng } = useGeolocation();
   const { stamps, stampCount, hasStamp, addStamp, resetPassport } = usePassport();
+  const { promptInstall } = usePWAInstall();
 
   const [activeTab, setActiveTab] = useState<TabType>('home');
   const [viewMode, setViewMode] = useState<'map' | 'list'>('map');
@@ -48,14 +50,14 @@ export function App() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--color-paper)' }}>
       {/* Top Sticky Header */}
-      <Header lang={lang} onToggleLang={toggleLang} />
+      <Header lang={lang} onToggleLang={toggleLang} promptInstall={promptInstall} />
 
       {/* Main Content Area based on Active Tab */}
       <main style={{ flex: 1 }}>
         {/* ── TAB 1: HOME ── */}
         {activeTab === 'home' && (
           <div style={{ paddingBottom: 'calc(5rem + var(--sab))' }}>
-            <HeroSection lang={lang} onExploreClick={() => setActiveTab('explore')} />
+            <HeroSection lang={lang} onExploreClick={() => setActiveTab('explore')} promptInstall={promptInstall} />
             <SeasonalBanner lang={lang} />
             <QuickStats lang={lang} />
             <HighlightCarousel

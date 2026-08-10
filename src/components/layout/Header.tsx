@@ -1,13 +1,14 @@
 import React from 'react';
 import { Language } from '../../types';
-import { Globe } from 'lucide-react';
+import { Globe, Download } from 'lucide-react';
 
 interface HeaderProps {
   lang: Language;
   onToggleLang: () => void;
+  promptInstall?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ lang, onToggleLang }) => {
+export const Header: React.FC<HeaderProps> = ({ lang, onToggleLang, promptInstall }) => {
   return (
     <header 
       style={{
@@ -42,24 +43,49 @@ export const Header: React.FC<HeaderProps> = ({ lang, onToggleLang }) => {
         </div>
       </div>
 
-      <button
-        onClick={onToggleLang}
-        className="btn"
-        style={{
-          padding: '0.35rem 0.65rem',
-          fontSize: '0.8125rem',
-          backgroundColor: 'rgba(255, 255, 255, 0.12)',
-          color: '#ffffff',
-          borderColor: 'rgba(255, 255, 255, 0.2)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.35rem'
-        }}
-        aria-label="Toggle language"
-      >
-        <Globe size={14} />
-        <span>{lang === 'th' ? 'EN' : 'TH'}</span>
-      </button>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+        <button
+          onClick={promptInstall}
+          className="btn"
+          style={{
+            padding: '0.35rem 0.65rem',
+            fontSize: '0.75rem',
+            backgroundColor: '#059669',
+            color: '#ffffff',
+            border: 'none',
+            borderRadius: '0.5rem',
+            fontWeight: 700,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.35rem',
+            boxShadow: '0 2px 6px rgba(5, 150, 105, 0.4)',
+            cursor: 'pointer'
+          }}
+          title="ติดตั้งแอปพลิเคชันลงมือถือ"
+        >
+          <Download size={14} />
+          <span>{lang === 'th' ? '📲 ติดตั้งแอป' : '📲 Install App'}</span>
+        </button>
+
+        <button
+          onClick={onToggleLang}
+          className="btn"
+          style={{
+            padding: '0.35rem 0.65rem',
+            fontSize: '0.8125rem',
+            backgroundColor: 'rgba(255, 255, 255, 0.12)',
+            color: '#ffffff',
+            borderColor: 'rgba(255, 255, 255, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.35rem'
+          }}
+          aria-label="Toggle language"
+        >
+          <Globe size={14} />
+          <span>{lang === 'th' ? 'EN' : 'TH'}</span>
+        </button>
+      </div>
     </header>
   );
 };
