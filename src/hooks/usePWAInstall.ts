@@ -2,26 +2,21 @@ import { useState, useEffect } from 'react';
 
 export function usePWAInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [isInstallable, setIsInstallable] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
-  const [isInstalled, setIsInstalled] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
 
   useEffect(() => {
-    // Check if already running as standalone app
-    if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone) {
-      setIsInstalled(true);
-      return;
-    }
+    // Check if running inside actual app (PWA standalone mode or Capacitor native)
+    const isApp = 
+      window.matchMedia('(display-mode: standalone)').matches || 
+      (window.navigator as any).standalone ||
+      document.referrer.includes('android-app://') ||
+      (window as any).Capacitor?.isNativePlatform();
 
-    // Detect iOS
-    const userAgent = window.navigator.userAgent.toLowerCase();
-    const isIosDevice = /iphone|ipad|ipod/.test(userAgent);
-    setIsIOS(isIosDevice);
+    setIsStandalone(!!isApp);
 
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setIsInstallable(true);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -31,26 +26,26 @@ export function usePWAInstall() {
     };
   }, []);
 
-  const promptInstall = async () => {
+  const downloadApp = () => {
+    // 1. If PWA browser install prompt is ready (Chrome/Android 1-click install)
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      const choiceResult = await deferredPrompt.userChoice;
-      if (choiceResult.outcome === 'accepted') {
-        setIsInstalled(true);
-        setIsInstallable(false);
-      }
       setDeferredPrompt(null);
-    } else if (isIOS) {
-      alert('📱 สำหรับ iPhone / iPad (iOS):\n\n1. แตะปุ่ม "แชร์" (Share icon 📤) ด้านล่างของ Safari\n2. เลื่อนลงแล้วเลือก "เพิ่มไปยังหน้าจอหลัก" (Add to Home Screen ➕)\n3. แตะ "เพิ่ม" (Add) เพื่อติดตั้งแอพลงมือถือทันที!');
-    } else {
-      alert('📱 วิธีติดตั้งแอพลงมือถือ (Android/Chrome):\n\nแตะเมนู 3 จุดมุมบนขวาในเบราวเซอร์ แล้วเลือก "ติดตั้งแอป" หรือ "เพิ่มลงในหน้าจอหลัก" เพื่อเปิดใช้งานแบบแอพมือถือปุ่มเดียว!');
+      return;
     }
+
+    // 2. Direct 100% download of Android APK file
+    const apkUrl = 'https://github.com/chanintales555-ctrl/ubon-geopark-app/releases/download/v1.0.0/UbonGeopark.apk';
+    const link = document.createElement('a');
+    link.href = apkUrl;
+    link.download = 'UbonGeopark.apk';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return {
-    isInstallable,
-    isIOS,
-    isInstalled,
-    promptInstall
+    isStandalone,
+    downloadApp
   };
 }

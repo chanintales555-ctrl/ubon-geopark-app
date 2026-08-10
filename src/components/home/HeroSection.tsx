@@ -6,9 +6,10 @@ interface HeroSectionProps {
   lang: Language;
   onExploreClick: () => void;
   promptInstall?: () => void;
+  isStandalone?: boolean;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onExploreClick, promptInstall }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onExploreClick, promptInstall, isStandalone }) => {
   return (
     <div
       style={{
@@ -105,7 +106,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onExploreClick, 
             <span>{lang === 'th' ? 'เริ่มสำรวจแผนที่ธรณีวิทยา 46 แห่ง' : 'Explore Interactive 46 Geosite Map'}</span>
           </button>
 
-          {promptInstall && (
+          {!isStandalone && promptInstall && (
             <button
               onClick={promptInstall}
               className="btn"

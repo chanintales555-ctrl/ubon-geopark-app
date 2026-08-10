@@ -25,7 +25,7 @@ export function App() {
   const { lang, toggleLang } = useLanguage();
   const { lat: userLat, lng: userLng } = useGeolocation();
   const { stamps, stampCount, hasStamp, addStamp, resetPassport } = usePassport();
-  const { promptInstall } = usePWAInstall();
+  const { isStandalone, downloadApp } = usePWAInstall();
 
   const [activeTab, setActiveTab] = useState<TabType>('home');
   const [viewMode, setViewMode] = useState<'map' | 'list'>('map');
@@ -50,14 +50,14 @@ export function App() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--color-paper)' }}>
       {/* Top Sticky Header */}
-      <Header lang={lang} onToggleLang={toggleLang} promptInstall={promptInstall} />
+      <Header lang={lang} onToggleLang={toggleLang} promptInstall={downloadApp} isStandalone={isStandalone} />
 
       {/* Main Content Area based on Active Tab */}
       <main style={{ flex: 1 }}>
         {/* ── TAB 1: HOME ── */}
         {activeTab === 'home' && (
           <div style={{ paddingBottom: 'calc(5rem + var(--sab))' }}>
-            <HeroSection lang={lang} onExploreClick={() => setActiveTab('explore')} promptInstall={promptInstall} />
+            <HeroSection lang={lang} onExploreClick={() => setActiveTab('explore')} promptInstall={downloadApp} isStandalone={isStandalone} />
             <SeasonalBanner lang={lang} />
             <QuickStats lang={lang} />
             <HighlightCarousel
