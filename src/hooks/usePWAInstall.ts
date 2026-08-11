@@ -27,22 +27,10 @@ export function usePWAInstall() {
   }, []);
 
   const downloadApp = () => {
-    // 1. Trigger PWA browser native install dialog if available
+    // Trigger native 1-click PWA app install prompt on Android/Chrome
     if (deferredPrompt) {
       deferredPrompt.prompt();
       setDeferredPrompt(null);
-    }
-
-    // 2. Direct 100% download of UbonGeopark.apk from website assets (No GitHub 404!)
-    try {
-      const link = document.createElement('a');
-      link.href = './downloads/UbonGeopark.apk';
-      link.download = 'UbonGeopark.apk';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (err) {
-      console.log('APK download triggered');
     }
   };
 
