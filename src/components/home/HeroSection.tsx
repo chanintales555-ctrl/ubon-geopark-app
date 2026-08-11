@@ -25,7 +25,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onExploreClick, 
     >
       {/* Real Background Image */}
       <img
-        src="/assets/hero/mekong-panorama.jpg"
+        src="./assets/hero/mekong-panorama.jpg"
         alt="Mekong Panorama"
         style={{
           position: 'absolute',

@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ lang, onToggleLang, promptInstal
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
         <img 
-          src="/assets/logo/geopark-logo-light.svg" 
+          src="./assets/logo/geopark-logo-light.svg" 
           alt="Geopark Logo" 
           style={{ height: '38px', width: 'auto' }}
         />
