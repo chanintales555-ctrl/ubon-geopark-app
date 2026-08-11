@@ -20,6 +20,7 @@ import { PassportBook } from './components/passport/PassportBook';
 import { Marketplace } from './components/shop/Marketplace';
 import { AboutView } from './components/AboutView';
 import { CheckInModal } from './components/passport/CheckInModal';
+import { InstallModal } from './components/InstallModal';
 
 export function App() {
   const { lang, toggleLang } = useLanguage();
@@ -27,6 +28,7 @@ export function App() {
   const { stamps, stampCount, hasStamp, addStamp, resetPassport } = usePassport();
   const { isStandalone, downloadApp } = usePWAInstall();
 
+  const [isInstallModalOpen, setIsInstallModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('home');
   const [viewMode, setViewMode] = useState<'map' | 'list'>('map');
   const [selectedAmphoe, setSelectedAmphoe] = useState<Amphoe | 'all'>('all');
@@ -34,6 +36,10 @@ export function App() {
 
   const [activeGeosite, setActiveGeosite] = useState<Geosite | null>(null);
   const [checkInGeosite, setCheckInGeosite] = useState<Geosite | null>(null);
+
+  const handleOpenInstall = () => {
+    setIsInstallModalOpen(true);
+  };
 
   // Filter 46 geosites based on amphoe and category selection
   const filteredGeosites = GEOSITES.filter(g => {
@@ -50,14 +56,14 @@ export function App() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--color-paper)' }}>
       {/* Top Sticky Header */}
-      <Header lang={lang} onToggleLang={toggleLang} promptInstall={downloadApp} isStandalone={isStandalone} />
+      <Header lang={lang} onToggleLang={toggleLang} promptInstall={handleOpenInstall} isStandalone={isStandalone} />
 
       {/* Main Content Area based on Active Tab */}
       <main style={{ flex: 1 }}>
         {/* ── TAB 1: HOME ── */}
         {activeTab === 'home' && (
           <div style={{ paddingBottom: 'calc(5rem + var(--sab))' }}>
-            <HeroSection lang={lang} onExploreClick={() => setActiveTab('explore')} promptInstall={downloadApp} isStandalone={isStandalone} />
+            <HeroSection lang={lang} onExploreClick={() => setActiveTab('explore')} promptInstall={handleOpenInstall} isStandalone={isStandalone} />
             <SeasonalBanner lang={lang} />
             <QuickStats lang={lang} />
             <HighlightCarousel
@@ -106,24 +112,30 @@ export function App() {
 
         {/* ── TAB 3: PASSPORT ── */}
         {activeTab === 'passport' && (
-          <PassportBook
-            stamps={stamps}
-            stampCount={stampCount}
-            onAddStamp={addStamp}
-            onResetPassport={resetPassport}
-            onSelectGeosite={(g) => setActiveGeosite(g)}
-            lang={lang}
-          />
+          <div style={{ paddingBottom: 'calc(5rem + var(--sab))' }}>
+            <PassportBook
+              stamps={stamps}
+              stampCount={stampCount}
+              onAddStamp={addStamp}
+              onResetPassport={resetPassport}
+              onSelectGeosite={(g) => setActiveGeosite(g)}
+              lang={lang}
+            />
+          </div>
         )}
 
         {/* ── TAB 4: SHOP ── */}
         {activeTab === 'shop' && (
-          <Marketplace lang={lang} />
+          <div style={{ paddingBottom: 'calc(5rem + var(--sab))' }}>
+            <Marketplace lang={lang} />
+          </div>
         )}
 
         {/* ── TAB 5: ABOUT ── */}
         {activeTab === 'about' && (
-          <AboutView lang={lang} />
+          <div style={{ paddingBottom: 'calc(5rem + var(--sab))' }}>
+            <AboutView lang={lang} />
+          </div>
         )}
       </main>
 
@@ -153,6 +165,14 @@ export function App() {
           lang={lang}
         />
       )}
+
+      {/* Modern PWA Install Modal */}
+      <InstallModal
+        isOpen={isInstallModalOpen}
+        onClose={() => setIsInstallModalOpen(false)}
+        lang={lang}
+        onNativeInstall={downloadApp}
+      />
 
       {/* Fixed Bottom Tab Navigation */}
       <TabBar

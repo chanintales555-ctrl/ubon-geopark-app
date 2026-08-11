@@ -27,21 +27,23 @@ export function usePWAInstall() {
   }, []);
 
   const downloadApp = () => {
-    // 1. If PWA browser install prompt is ready (Chrome/Android 1-click install)
+    // 1. If PWA browser install prompt is ready (1-click native install dialog)
     if (deferredPrompt) {
       deferredPrompt.prompt();
       setDeferredPrompt(null);
       return;
     }
 
-    // 2. Direct 100% download of Android APK file
-    const apkUrl = 'https://github.com/chanintales555-ctrl/ubon-geopark-app/releases/download/v1.0.0/UbonGeopark.apk';
-    const link = document.createElement('a');
-    link.href = apkUrl;
-    link.download = 'UbonGeopark.apk';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // 2. Fallback: Trigger direct web app installation / home screen guide smoothly without 404
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isIOS = /iphone|ipad|ipod/.test(userAgent);
+
+    if (isIOS) {
+      alert('📱 วิธีติดตั้งลง iPhone / iPad:\n\n1. แตะปุ่ม "แชร์" (Share 📤) ด้านล่างเบราว์เซอร์ Safari\n2. เลื่อนลงแล้วเลือก "เพิ่มไปยังหน้าจอหลัก" (Add to Home Screen ➕)\n3. แตะ "เพิ่ม" เพื่อใช้งานเป็นแอพมือถือทันที!');
+    } else {
+      // Direct install prompt or local package link
+      alert('📱 วิธีติดตั้งลงสมาร์ตโฟน Android:\n\n1. แตะปุ่มเมนู (3 จุดมุมขวาบนเบราว์เซอร์)\n2. เลือก "ติดตั้งแอป" (Install App) หรือ "เพิ่มลงในหน้าจอหลัก"\n3. แอพ Ubon Geopark จะถูกติดตั้งลงเครื่องมือถือทันที!');
+    }
   };
 
   return {
